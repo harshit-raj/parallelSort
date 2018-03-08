@@ -9,11 +9,12 @@ public class Main {
         Random random = new Random(0L);
         int[] array = new int[2000];
         for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000);
+        System.out.println("--------------------Presorted array--------------------");
+        for(int x: array) System.out.println(x);
+        
         ParSort.sort(array, 0, array.length);
-        
-        System.out.println("Back to main");
-        //for (int i : array) System.out.println(i);
-        
+        System.out.println("---------------------Sorted  array---------------------");
+        for(int x: array) System.out.println(x);
         if (array[0]==11) System.out.println("Success!");
     }
 }
