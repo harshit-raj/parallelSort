@@ -1,8 +1,8 @@
 package edu.info6205.parallelSort;
 
-import java.awt.List;
+import java.util.ArrayList;
 
-public interface FileHandler {
-	public boolean writecsv(String colName,String fileName,List data);
+public interface FileHandler<T extends CSVData> {
+	public boolean writecsv(String colName,String fileName,ArrayList<T> data);
 
 }
