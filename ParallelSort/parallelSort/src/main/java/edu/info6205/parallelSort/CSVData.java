@@ -1,6 +1,6 @@
 package edu.info6205.parallelSort;
 
-public class Data {
+public class CSVData {
 	private long size;
 	private double runtime;
 	private int cutoff;
@@ -8,13 +8,13 @@ public class Data {
 	
 	
 	
-	public Data() {
+	public CSVData() {
 		
 	}
 	
 	
 	
-	public Data(long size, double runtime, int cutoff) {
+	public CSVData(long size, double runtime, int cutoff) {
 		super();
 		this.size = size;
 		this.runtime = runtime;
