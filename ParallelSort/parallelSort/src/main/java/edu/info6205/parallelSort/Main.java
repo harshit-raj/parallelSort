@@ -36,23 +36,46 @@ public class Main {
     	//run test
     	double startTime = 0;
         double endTime = 0;
-        int warmUpRun = 500;
+        int warmUpRun = 250;
         int arraySize = 2000;
         boolean startTiming = false;
-        for(int i=1; i<=1000; i++) {
-        	for(int k=0; k<1000; k++) {
-        		if(i == warmUpRun) {
-            		startTime = System.nanoTime();
-//            		System.out.println("start timing---------------");
-            		startTiming = true;
+        boolean secondLoop = false;
+        boolean firstLoop = true;
+        
+        
+        
+        for(int i=5; i<=300; i++) {
+        	if(firstLoop == true) {
+        		for(int k=0; k<1000; k++) {       		
+            		Random random = new Random(0L);            	
+            		int[] array = new int[arraySize];
+                    for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
+                	ParSort.cutoff = i;
+            		ParSort.sort(array, 0, array.length);
+            		System.out.println(i+ ", " + k);
+            		if(i==10) {
+            			secondLoop = true;
+            			break;
+            		}
             	}
-        		Random random = new Random(0L);            	
-        		int[] array = new int[arraySize];
-                for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
-            	ParSort.cutoff = i;
-        		ParSort.sort(array, 0, array.length);
-//        		System.out.println(i+ ", " + k);
         	}
+        	
+        	if(secondLoop == true) {
+        		firstLoop = false;
+        		for(int k=0; k<100; k++) {
+            		if(i == 11) {
+                		startTime = System.nanoTime();
+//                		System.out.println("start timing---------------");
+                		startTiming = true;
+                	}
+            		Random random = new Random(0L);            	
+            		int[] array = new int[arraySize];
+                    for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
+                	ParSort.cutoff = i;
+            		ParSort.sort(array, 0, array.length);
+            		System.out.println(i+ ", " + k);
+            	}
+        	}        	
         	endTime = System.nanoTime();        	
         	double runtime = (endTime - startTime)/(1000000*(1000)); // divide the nanoseconds by 1,000,000 to get milliseconds, then divide by n to get mean value of timing
         	if(startTiming == true) {
