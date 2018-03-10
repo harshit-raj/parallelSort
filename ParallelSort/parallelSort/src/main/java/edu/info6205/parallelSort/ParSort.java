@@ -10,7 +10,7 @@ class ParSort {
     public static void sort(int[] array, int from, int to) {
     	int size = to - from;
         int mid = from +size/2;
-    	if (size <= cutoff) Arrays.sort(array, from, to);
+    	if (size < cutoff) Arrays.sort(array, from, to);
         else {
         	System.out.println("First split");
             CompletableFuture<int[]> parsort1 = parsort(array, from, mid) ; //called parasort on first half
@@ -20,38 +20,32 @@ class ParSort {
             CompletableFuture<int[]> parsort = parsort1.
                     thenCombine(parsort2, (xs1, xs2) -> {
                         System.out.println("Merging-----------");
-                    	int[] result = new int[xs1.length + xs2.length];
-                        int x1 = 0, x2 = 0, rs = 0;
+                    	int x1 = 0, x2 = 0, rs = 0;
                         int lxs1 = xs1.length, lxs2 = xs2.length;
                         //merging
                         while(x1<lxs1 && x2< lxs2) {
                         	
                         	if(xs1[x1]<=xs2[x2]) {
-                        		result[rs] = xs1[x1];
+                        		array[rs] = xs1[x1];
                         		x1++;
                         	}
                         	else {
-                        		result[rs] = xs2[x2];
+                        		array[rs] = xs2[x2];
                         		x2++;
                         	}
                         	rs++;
                         }
                         
                         while(x1<lxs1) {
-                        	result[rs++] = xs1[x1++];
+                        	array[rs++] = xs1[x1++];
                         }
                         
                         while(x2<lxs2) {
-                        	result[rs++] = xs2[x2++];
+                        	array[rs++] = xs2[x2++];
                         }
-                        return result;
+                        return array;
                     });
 
-            parsort.whenComplete((result, throwable) -> {
-            	for (int i = 0; i < result.length; i++) {
-					array[i] = result[i];
-				}
-            }); 
             parsort.join();
         }
     }

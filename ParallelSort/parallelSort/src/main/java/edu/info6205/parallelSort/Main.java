@@ -10,23 +10,23 @@ public class Main {
 
     public static void main(String[] args) {
     	if (args.length>0) ParSort.cutoff = Integer.parseInt(args[0]);
-    	Main mn = new Main();
-    	mn.run();
-    	
+//    	Main mn = new Main();
+//    	mn.run();
 //    	
-//    	if (args.length>0) ParSort.cutoff = Integer.parseInt(args[0]);
-//        Random random = new Random(0L);
-//        int[] array = new int[1000000];
-//        for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000);
-//        System.out.println("--------------------Presorted array--------------------");
-//        for(int x: array) System.out.println(x);
-//        
-//        ParSort.sort(array, 0, array.length);
-//        System.out.println("---------------------Sorted  array---------------------");
-//        
-//        FileHandler<CSVData> fh = new FileHandlerImpl_CSV<>();
-//        for(int x: array) System.out.println(x);
-//        if (array[0]==11) System.out.println("Success!");
+//    	
+    	if (args.length>0) ParSort.cutoff = Integer.parseInt(args[0]);
+        Random random = new Random(0L);
+        int[] array = new int[2000];
+        for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000);
+        System.out.println("--------------------Presorted array--------------------");
+        //for(int x: array) System.out.println(x);
+        
+        ParSort.sort(array, 0, array.length);
+        System.out.println("---------------------Sorted  array---------------------");
+        
+        FileHandler<CSVData> fh = new FileHandlerImpl_CSV<>();
+        for(int x: array) System.out.println(x);
+        if (array[0]==11) System.out.println("Success!");
     }
     
     
@@ -47,9 +47,9 @@ public class Main {
         
         
         
-        for(int i=4; i<=4; i+=100) {                  //outermost loop
+        for(int i=8; i<=8; i+=100) {                  //outermost loop
         	
-        	ParSort.cutoff=1;
+        	ParSort.cutoff=2;
         	System.out.println("Cutoff is -------"+ i);
         	for(int j = 0;j<testCount;j++ ) {
         		int[] array = generateArray(i);
