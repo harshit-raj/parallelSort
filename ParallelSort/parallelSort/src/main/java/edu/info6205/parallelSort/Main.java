@@ -36,82 +36,38 @@ public class Main {
     	//run test
     	double startTime = 0;
         double endTime = 0;
-        int warmUpRun = 250;
+        int warmUpRun = 10;
         int arraySize = 2000;
         boolean startTiming = false;
         boolean secondLoop = false;
         boolean firstLoop = true;
+        double averageTime = 0;
+        int testCount = 1;
         
         
         
-        for(int i=5; i<=300; i++) {
-        	if(firstLoop == true) {
-        		for(int k=0; k<1000; k++) {       		
-            		Random random = new Random(0L);            	
-            		int[] array = new int[arraySize];
-                    for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
-                	ParSort.cutoff = i;
-            		ParSort.sort(array, 0, array.length);
-            		System.out.println(i+ ", " + k);
-            		if(i==10) {
-            			secondLoop = true;
-            			break;
-            		}
-            	}
+        
+        for(int i=4; i<=4; i+=100) {                  //outermost loop
+        	
+        	ParSort.cutoff=1;
+        	System.out.println("Cutoff is -------"+ i);
+        	for(int j = 0;j<testCount;j++ ) {
+        		int[] array = generateArray(i);
+        		startTime = System.nanoTime();
+        		ParSort.sort(array, 0, array.length);
+        		endTime = System.nanoTime();
+        		if(j > warmUpRun) {
+        			averageTime += (endTime - startTime);
+        		}
         	}
         	
-        	if(secondLoop == true) {
-        		firstLoop = false;
-        		for(int k=0; k<100; k++) {
-            		if(i == 11) {
-                		startTime = System.nanoTime();
-//                		System.out.println("start timing---------------");
-                		startTiming = true;
-                	}
-            		Random random = new Random(0L);            	
-            		int[] array = new int[arraySize];
-                    for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
-                	ParSort.cutoff = i;
-            		ParSort.sort(array, 0, array.length);
-            		System.out.println(i+ ", " + k);
-            	}
-        	}        	
-        	endTime = System.nanoTime();        	
-        	double runtime = (endTime - startTime)/(1000000*(1000)); // divide the nanoseconds by 1,000,000 to get milliseconds, then divide by n to get mean value of timing
-        	if(startTiming == true) {
-//        		System.out.println("end timing. time is " + runtime + " cutoff is: " + i);
-        		CSVData data = new CSVData(arraySize, runtime, ParSort.cutoff);
-            	listData.add(data);
-        	}
+    		averageTime /= (testCount-warmUpRun);
+        	averageTime /= 1000000; //converting to millisecons
+        	System.out.println("Time take -------"+ averageTime);
+        	CSVData data = new CSVData(arraySize, averageTime, ParSort.cutoff);
+        	listData.add(data);
         }
-    	
-    	
-    	
-//    	double startTime = 0;
-//        double endTime = 0;
-//        int warmUpRun = 500;
-//        int arraySize = 2000;
-//        for(int i=400; i<=5000; i+=10) {
-//        	for(int k=0; k<1000; k++) {
-//        		if(i == warmUpRun) {
-//            		startTime = System.nanoTime();
-//            		System.out.println("start timing---------------");
-//            	}
-//        		Random random = new Random(0L);            	
-//        		int[] array = new int[arraySize];
-//                for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
-//            	ParSort.cutoff = i;
-//        		ParSort.sort(array, 0, array.length);
-//        	}
-//        	endTime = System.nanoTime();        	
-//	    	double runtime = (endTime - startTime)/(1000000*(1000)); // divide the nanoseconds by 1,000,000 to get milliseconds, then divide by n to get mean value of timing
-//	    	System.out.println("end timing. time is " + runtime);
-//	    	CSVData data = new CSVData(arraySize, runtime, ParSort.cutoff);
-//	    	listData.add(data);
-//    	}
-//        for(CSVData d:listData) {
-//        	System.out.println(d.getRuntime());
-//        }
+        System.out.println("Saving to file ");
         try {
         	FileHandler<CSVData> fh = new FileHandlerImpl_CSV<>();
             String colName = "Array Size, Run Time, Cutoff\n";
@@ -122,17 +78,14 @@ public class Main {
 		}
         
 		
-        //start the loop
-    		//set values for parasort
-    			//generate the array
-    			//set cutoff value
-    			//do warmup runs
-    			//start timer and run
-    			//stop timer and get run time
-    			//new instance of CSVdata and give it all values
-    			//add new instance to arraylist
-    		//call file hanler and give it the arraylist and other required stuff	
 	}
+    
+    private int[] generateArray(int size) {
+    	Random random = new Random(0L);            	
+		int[] array = new int[size];
+        for (int j = 0; j < array.length; j++) array[j] = random.nextInt(10000);
+        return array;
+    }
     
     private boolean testSort() {
     	ParSort.cutoff = 1000;
