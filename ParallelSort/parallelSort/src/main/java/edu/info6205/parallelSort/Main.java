@@ -11,8 +11,8 @@ public class Main {
     public static void main(String[] args) {
     	if (args.length>0) ParSort.cutoff = Integer.parseInt(args[0]);
     	Main mn = new Main();
-    	mn.run();
-    	
+//    	mn.run();
+    	mn.testSort();
 //    	
 //    	if (args.length>0) ParSort.cutoff = Integer.parseInt(args[0]);
 //        Random random = new Random(0L);
@@ -91,11 +91,11 @@ public class Main {
     	ParSort.cutoff = 1000;
         
     	Random random = new Random(0L);
-        int[] array = new int[1000000];
+        int[] array = new int[2500];
         for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000);
         //System.out.println("--------------------Presorted array--------------------");
-        for(int x: array) System.out.println(x);
-        
+//        for(int x: array) System.out.println(x);
+        ParSort.cutoff=5;
         ParSort.sort(array, 0, array.length);
         //System.out.println("---------------------Sorted  array---------------------");
         
@@ -103,18 +103,10 @@ public class Main {
         for(int x: array) System.out.println(x);
         if (array[0]==11) {
         	System.out.println("Sort tested Correctly");
+        	System.out.println("Number of thread is:" + ParSort.thread);
         	return true;
         }
         return false;
     }
 
-
-
-
-	private static void writeToCSV(ParSort ps) {
-    	for(int i=100; i<=10000; i+=10) {
-    		ps.cutoff = i;
-    		
-    	}
-    }
 }
