@@ -37,7 +37,7 @@ public class Benchmark<T> {
 
     public static void main(String[] args) {
         int m = 100; // This is the number of repetitions: sufficient to give a good mean value of timing
-        int arrayLength = 10000;
+        int arrayLength = 100000;
         Integer[] randomArray = new Integer[arrayLength];
 //        Integer[] ascendArray = new Integer[arrayLength];
 //        Integer[] descendArray = new Integer[arrayLength];
@@ -53,7 +53,7 @@ public class Benchmark<T> {
         
         for(int i = 0; i < randomArray.length; i++) copiedArray[i] = randomArray[i];
         //Time vs. Cutoff
-        for(int i = 1000; i < arrayLength/2; i+=50) {
+        for(int i = 1000; i < arrayLength/2; i+=10) {
         	System.out.println("cutoff is: " + i);
         	benchmarkSort(copiedArray, arrayLength, "ParallelSort", new ParSort<>(), m, i);
         }  

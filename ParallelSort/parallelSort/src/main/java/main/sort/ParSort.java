@@ -14,7 +14,7 @@ public class ParSort<X> implements Sort<X> {
 	//public  static ExecutorService eService = Executors.newFixedThreadPool(200);
 	public static int thread = 0;
 //	public ExecutorService eService= /*new ForkJoinPool(4);*/ Executors.newFixedThreadPool(200);
-	public ForkJoinPool eService = new ForkJoinPool(200);
+//	public ForkJoinPool eService = new ForkJoinPool(200);
 	
 	public static int recusionCount = 0;
 	public static int recursionLimit = 1000;
@@ -31,9 +31,9 @@ public class ParSort<X> implements Sort<X> {
     	
         else {
 //        	System.out.println("First split");
-            CompletableFuture<Comparable<X>[]> parsort1 = parsort(array, from, mid, eService) ; //called parasort on first half
+            CompletableFuture<Comparable<X>[]> parsort1 = parsort(array, from, mid) ; //called parasort on first half
 //            System.out.println("Second split");
-            CompletableFuture<Comparable<X>[]> parsort2 = parsort(array, mid,to, eService); // called parasort on second half
+            CompletableFuture<Comparable<X>[]> parsort2 = parsort(array, mid,to); // called parasort on second half
             //callback when parasort 1 completes
             CompletableFuture<Comparable<X>[]> parsort = parsort1.
                     thenCombine(parsort2, (xs1, xs2) -> {
@@ -77,7 +77,7 @@ public class ParSort<X> implements Sort<X> {
     }
 
     @SuppressWarnings("unchecked")
-	private CompletableFuture<Comparable<X>[]> parsort(Comparable<X>[] array, int from, int to, ForkJoinPool es) {
+	private CompletableFuture<Comparable<X>[]> parsort(Comparable<X>[] array, int from, int to) {
         //recusionCount++;
         //System.out.println("Recursion Count "+recusionCount);
 //    	System.out.println("CompFuture called");
@@ -100,7 +100,7 @@ public class ParSort<X> implements Sort<X> {
 
                 	
                 	return result;
-                },es
+                }
         );
     }
 
