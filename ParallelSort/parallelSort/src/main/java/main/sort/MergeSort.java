@@ -51,13 +51,17 @@ public class MergeSort<X> implements Sort<X>{
 	
 	@SuppressWarnings({ "rawtypes" })
 	private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
-		for(int k = lo; k <= hi; k++) {
+		for(int k = lo; k < hi; k++) {
+			//System.out.println("Lenth of aux : "+ aux.length+" a: "+ a.length+ " K : "+ k);
 			aux[k] = a[k];
 		}
 		int i = lo, j = mid+1;
-		for(int k = lo; k <= hi; k++) {
+		for(int k = lo; k < hi; k++) {
+			//System.out.println("----------------");
+			//System.out.println("Lenth of aux : "+ aux.length+" a: "+ a.length);
+			//System.out.println("K : "+k+" J : "+j+" I : "+i) ;
 			if(i > mid) 					a[k] = aux[j++];
-			else if(j > hi) 				a[k] = aux[i++];
+			else if(j >= hi) 				a[k] = aux[i++];
 			else if(less(aux[j], aux[i])) 	a[k] = aux[j++];
 			else 							a[k] = aux[i++];
 		}
